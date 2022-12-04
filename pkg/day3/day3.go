@@ -1,8 +1,8 @@
 package day3
 
 import (
-	"advent_of_code/pkg/buffer"
 	"bufio"
+	"bytes"
 	"fmt"
 	"io"
 	"os"
@@ -101,9 +101,8 @@ func Variant2() {
 		panic(err)
 	}
 	defer f.Close()
-	buf := &buffer.Buffer{}
-	io.Copy(buf, f)
-	part1(buf)
-	buf.Seek0()
+	buf := &bytes.Buffer{}
+	tr := io.TeeReader(f, buf)
+	part1(tr)
 	part2(buf)
 }
